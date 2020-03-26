@@ -45,12 +45,11 @@ exports.user_signup = (req, res, next) => {
                         // Save the verification token
                         token.save(function(err) {
                            if (err) {
-                              return res.status(500).send({ msg: err.message });
+                              return res.status(500).json({ msg: err.message });
                            }
 
                            let customlink =
-                              'http://' +
-                              req.headers.host +
+                              process.env.DOMAIN +
                               '/user/verifyAccount/' +
                               token.token;
                            // Send the email
@@ -172,8 +171,8 @@ exports.user_verify = (req, res, next) => {
          // Verify and save the user
          user.isVerified = true;
          user.save(function (err) {
-            if (err) { return res.status(500).send({ msg: err.message }); }
-            res.status(200).send("The account has been verified. Please log in.");
+            if (err) { return res.status(500).json({ msg: err.message }); }
+            res.status(200).json({message: "The account has been verified. Please log in."});
          });
       })
 
@@ -185,18 +184,17 @@ exports.user_resend_token = (req, res, next) => {
       .exec()
       .then(user => {
          if (!user) return res.status(400).json({ message: 'We were unable to find a user with that email.' });
-         if (user.isVerified) return res.status(400).send({ message: 'This account has already been verified. Please log in.' });
+         if (user.isVerified) return res.status(400).json({ message: 'This account has already been verified. Please log in.' });
          // Create a verification token, save it, and send email
          let token = new Token({ _userId: user._id, token: crypto.randomBytes(16).toString('hex') });
 
          // Save the token
          token.save(function (err) {
             if (err) {
-               return res.status(500).send({ msg: err.message });
+               return res.status(500).json({ msg: err.message });
             }
             let customlink =
-               'http://' +
-               req.headers.host +
+               process.env.DOMAIN +
                '/user/verifyAccount/' +
                token.token;
             // Send the email
