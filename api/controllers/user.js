@@ -50,7 +50,7 @@ exports.user_signup = (req, res, next) => {
 
                            let customlink =
                               process.env.DOMAIN +
-                              '/user/verifyAccount/' +
+                              '/verifyAccount/' +
                               token.token;
                            // Send the email
                            sgMail.setApiKey(process.env.SENDGRID_API_KEY);
@@ -195,7 +195,7 @@ exports.user_resend_token = (req, res, next) => {
             }
             let customlink =
                process.env.DOMAIN +
-               '/user/verifyAccount/' +
+               'verifyAccount/' +
                token.token;
             // Send the email
             sgMail.setApiKey(process.env.SENDGRID_API_KEY);
