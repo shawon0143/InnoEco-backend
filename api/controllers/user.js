@@ -195,7 +195,7 @@ exports.user_resend_token = (req, res, next) => {
             }
             let customlink =
                process.env.DOMAIN +
-               'verifyAccount/' +
+               '/verifyAccount/' +
                token.token;
             // Send the email
             sgMail.setApiKey(process.env.SENDGRID_API_KEY);
@@ -248,7 +248,7 @@ exports.user_forgot_password = (req, res, next) => {
             if (err) {
                return res.status(500).json({ msg: err.message });
             }
-            let customlink = process.env.DOMAIN + 'resetPassword/' + token.token;
+            let customlink = process.env.DOMAIN + '/resetPassword/' + token.token;
             // Send the email
             sgMail.setApiKey(process.env.SENDGRID_API_KEY);
             sgMail.setSubstitutionWrappers('{{', '}}');
