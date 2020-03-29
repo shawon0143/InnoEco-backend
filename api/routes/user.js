@@ -15,4 +15,8 @@ router.get("/verifyAccount/:token", UserController.user_verify);
 
 router.post("/resendToken", UserController.user_resend_token);
 
+router.post("/forgotPassword", UserController.user_forgot_password);
+
+router.post("/resetPassword/:token", UserController.user_reset_password);
+
 module.exports = router;

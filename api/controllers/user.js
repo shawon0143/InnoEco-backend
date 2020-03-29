@@ -236,3 +236,76 @@ exports.user_resend_token = (req, res, next) => {
          res.status(500).json({ error: err });
       });
 };
+
+exports.user_forgot_password = (req, res, next) => {
+   User.findOne({ email: req.body.email })
+      .exec()
+      .then(user => {
+         if (!user) return res.status(400).json({ message: 'We were unable to find a user with that email.' });
+         let token = new Token({ _userId: user._id, token: crypto.randomBytes(16).toString('hex') });
+         // Save the token
+         token.save(function (err) {
+            if (err) {
+               return res.status(500).json({ msg: err.message });
+            }
+            let customlink = process.env.DOMAIN + 'resetPassword/' + token.token;
+            // Send the email
+            sgMail.setApiKey(process.env.SENDGRID_API_KEY);
+            sgMail.setSubstitutionWrappers('{{', '}}');
+            const msg = {
+               to: user.email,
+               from: 'sha0143@hotmail.com',
+               subject: 'Reset Password',
+               templateId:
+                  'ed1ea2ce-3394-422c-99a4-17e06450d98d',
+               substitutions: {
+                  verificationLink: customlink,
+                  text:
+                     'Please reset your password by clicking the following link: \n\n' +
+                     customlink,
+               },
+            };
+            (async () => {
+               try {
+                  await sgMail.send(msg);
+                  res.status(201).json({
+                     message:
+                        'A password reset email has been sent to ' +
+                        user.email +
+                        '.',
+                  });
+               } catch (err) {
+                  console.error(err.toString());
+                  return res
+                     .status(500)
+                     .json({ error: err.message });
+               }
+            })();
+         });
+      })
+      .catch(err => {
+         console.log(err);
+         res.status(500).json({ error: err });
+      });
+};
+
+exports.user_reset_password = (req, res, next) => {
+   Token.findOne({ token: req.params.token }, function (err, token) {
+      // Find a matching token
+      if (!token) return res.status(400).json({ message: 'Your link my have expired. Please apply again.' });
+      // If we found a token, find a matching user
+      User.findOne({ _id: token._userId }, function (err, user) {
+         if (!user) return res.status(400).json({ message: 'We were unable to find a user for this token.' });
+         // encrypt password
+         bcrypt.hash(req.body.password, 10, (err, hash) => {
+            // save the user
+            user.password = hash;
+            user.save(function (err) {
+               if (err) { return res.status(500).json({ msg: err.message }); }
+               res.status(200).json({message: "Password reset successful"});
+            });
+         });
+      })
+   });
+};
+
