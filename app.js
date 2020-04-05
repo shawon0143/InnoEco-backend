@@ -6,6 +6,8 @@ const dotenv = require('dotenv');
 dotenv.config();
 
 const userRoutes = require("./api/routes/user");
+const knowledgeRoutes = require("./api/routes/knowledge");
+const uploadRoutes = require("./api/routes/fileUpload");
 
 // Init app
 const app = express();
@@ -45,7 +47,8 @@ app.use((req, res, next) => {
 
 // Routes which should handle requests
 app.use("/user", userRoutes);
-
+app.use("/knowledge", knowledgeRoutes);
+app.use("/upload", uploadRoutes);
 
 app.use((req, res, next) => {
    const error = new Error("Not found");

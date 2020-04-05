@@ -31,6 +31,8 @@ exports.user_signup = (req, res, next) => {
                      role: req.body.role,
                      address: req.body.address,
                      mobile: req.body.mobile,
+                     phone: req.body.phone,
+                     imageUrl: req.body.imageUrl
                   });
                   newUser
                      .save()
@@ -131,6 +133,9 @@ exports.user_login = (req, res, next) => {
                return res.status(200).json({
                   message: 'Auth successful',
                   token: token,
+                  role: user[0].role,
+                  firstName: user[0].firstName,
+                  lastName: user[0].lastName
                });
             }
             res.status(401).json({
