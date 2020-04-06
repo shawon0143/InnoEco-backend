@@ -1,5 +1,4 @@
 const aws = require('aws-sdk');
-require('dotenv').config(); // Configure dotenv to load in the .env file
 
 // Configure aws with your accessKeyId and your secretAccessKey
 aws.config.update({
