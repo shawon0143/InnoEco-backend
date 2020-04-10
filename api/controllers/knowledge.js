@@ -14,7 +14,8 @@ exports.knowledge_create = (req, res, next) => {
       members: req.body.members,
       knowledgeFile: req.body.knowledgeFile,
       createdBy: req.body.createdBy,
-      comments: []
+      comments: [],
+      likes: []
    });
    knowledge
       .save()
@@ -42,7 +43,7 @@ exports.knowledge_find_by_id = (req, res, next) => {
    const id = req.params.knowledgeId;
    Knowledge.findById(id)
       .select(
-         "_id title description type affiliation status lookingFor members knowledgeFile createdBy comments createdAt updatedAt"
+         "_id title description type affiliation status lookingFor members knowledgeFile createdBy comments likes createdAt updatedAt"
       )
       .exec()
       .then(doc => {
@@ -70,7 +71,7 @@ exports.knowledge_find_by_id = (req, res, next) => {
 exports.knowledge_get_all = (req, res, next) => {
    Knowledge.find()
       .select(
-         "_id title description type affiliation status lookingFor members knowledgeFile createdBy comments createdAt updatedAt"
+         "_id title description type affiliation status lookingFor members knowledgeFile createdBy comments likes createdAt updatedAt"
       )
       .exec()
       .then(docs => {
@@ -89,6 +90,7 @@ exports.knowledge_get_all = (req, res, next) => {
                   knowledgeFile: doc.knowledgeFile,
                   createdBy: doc.createdBy,
                   comments: doc.comments,
+                  likes: doc.likes,
                   createdAt: doc.createdAt,
                   updatedAt: doc.updatedAt,
                   request: {

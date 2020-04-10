@@ -103,19 +103,19 @@ exports.user_login = (req, res, next) => {
       .exec()
       .then(user => {
          if (user.length < 1) {
-            return res.status(401).json({
+            return res.status(400).json({
                message: 'Authentication failed',
             });
          }
          if (user[0].isVerified === false) {
-            return res.status(401).json({
+            return res.status(400).json({
                message: 'Your account has not been verified.',
             });
          }
 
          bcrypt.compare(req.body.password, user[0].password, (err, result) => {
             if (err) {
-               return res.status(401).json({
+               return res.status(400).json({
                   message: 'Authentication failed',
                });
             }
@@ -138,7 +138,7 @@ exports.user_login = (req, res, next) => {
                   lastName: user[0].lastName
                });
             }
-            res.status(401).json({
+            res.status(400).json({
                message: 'Authentication failed',
             });
          });

@@ -18,6 +18,12 @@ const knowledgeSchema = mongoose.Schema(
             userId: { type: mongoose.Schema.Types.ObjectId, ref: 'User', required: true},
             postedOn: { type: Date, required: true }
          }
+      ],
+      likes: [
+         {
+            userId: { type: mongoose.Schema.Types.ObjectId, ref: 'User', required: true},
+            likedOn: { type: Date, required: true }
+         }
       ]
    },
    { timestamps: true },
