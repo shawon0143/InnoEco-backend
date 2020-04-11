@@ -7,6 +7,27 @@ const sgMail = require('@sendgrid/mail');
 const User = require('../models/user');
 const Token = require('../models/token');
 
+exports.user_get_user_by_email = (req, res, next) => {
+   User.findOne({ email: req.params.email })
+      .select(
+         "_id firstName lastName address mobile phone imageUrl"
+      )
+      .exec()
+      .then(user => {
+         if (user) {
+            console.log(user);
+            res.status(200).json({
+               message: 'Success',
+               user: user
+            });
+         }
+      })
+      .catch(err => {
+         console.log(err);
+         res.status(500).json({ error: err });
+      });
+};
+
 exports.user_signup = (req, res, next) => {
    User.find({ email: req.body.email })
       .exec()
@@ -134,8 +155,6 @@ exports.user_login = (req, res, next) => {
                   message: 'Auth successful',
                   token: token,
                   role: user[0].role,
-                  firstName: user[0].firstName,
-                  lastName: user[0].lastName
                });
             }
             res.status(400).json({

@@ -19,4 +19,6 @@ router.post("/forgotPassword", UserController.user_forgot_password);
 
 router.post("/resetPassword/:token", UserController.user_reset_password);
 
+router.get("/getUserDetails/:email", checkAuth, UserController.user_get_user_by_email);
+
 module.exports = router;
