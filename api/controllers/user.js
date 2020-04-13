@@ -28,6 +28,21 @@ exports.user_get_user_by_email = (req, res, next) => {
       });
 };
 
+exports.user_update = (req, res, next) => {
+   User.update({email: req.params.email}, { $set: req.body })
+      .exec()
+      .then(result => {
+         console.log(result);
+         res.status(200).json({
+            message: "User updated"
+         });
+      })
+      .catch(err => {
+         console.log(err);
+         res.status(500).json({ error: 'User update failed.' });
+      });
+};
+
 exports.user_signup = (req, res, next) => {
    User.find({ email: req.body.email })
       .exec()

@@ -38,3 +38,19 @@ exports.sign_s3 = (req, res) => {
       res.status(200).json({ success: true, data: { returnData } });
    });
 };
+
+exports.s3_delete_object = (req, res, next) => {
+   const s3 = new aws.S3(); // Create a new instance of S3
+   const fileName = req.params.fileName;
+   const s3Params = {
+      Bucket: S3_BUCKET,
+      Key: fileName
+   };
+   s3.deleteObject(s3Params, (err, data) => {
+      if (err) {
+         console.log(err);
+         res.status(500).json({ success: false, error: err });
+      }
+      res.status(200).json({ success: true, message: fileName + ' deleted' });
+   })
+};
