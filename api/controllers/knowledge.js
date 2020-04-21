@@ -87,6 +87,7 @@ exports.knowledge_find_by_id = (req, res, next) => {
 
 exports.knowledge_get_all = (req, res, next) => {
    Knowledge.find()
+      .sort({createdAt: -1})
       .select(
          "_id title description type affiliation status lookingFor members knowledgeFile createdBy comments likes createdAt updatedAt"
       )

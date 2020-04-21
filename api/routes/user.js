@@ -21,6 +21,8 @@ router.post("/resetPassword/:token", UserController.user_reset_password);
 
 router.get("/getUserDetails/:email", checkAuth, UserController.user_get_user_by_email);
 
+router.post("/getUserByIdList", UserController.user_get_user_by_id_list);
+
 router.patch("/:email", checkAuth, UserController.user_update);
 
 module.exports = router;

@@ -28,6 +28,28 @@ exports.user_get_user_by_email = (req, res, next) => {
       });
 };
 
+exports.user_get_user_by_id_list = (req, res, next) => {
+   console.log(req.body.idList);
+   User.find({ _id: { $in : req.body.idList} })
+      .select(
+         "firstName lastName imageUrl"
+      )
+      .exec()
+      .then(user => {
+         if (user) {
+            // console.log(user);
+            res.status(200).json({
+               message: 'Success',
+               user: user
+            });
+         }
+      })
+      .catch(err => {
+         console.log(err);
+         res.status(500).json({ error: err });
+      });
+};
+
 exports.user_update = (req, res, next) => {
    User.update({email: req.params.email}, { $set: req.body })
       .exec()
