@@ -15,7 +15,7 @@ exports.user_get_user_by_email = (req, res, next) => {
       .exec()
       .then(user => {
          if (user) {
-            console.log(user);
+            // console.log(user);
             res.status(200).json({
                message: 'Success',
                user: user

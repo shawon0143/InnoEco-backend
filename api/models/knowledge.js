@@ -11,6 +11,7 @@ const knowledgeSchema = mongoose.Schema(
       lookingFor: [{ type: String }],
       members: [{ type: String }],
       knowledgeFile: { type: String },
+      knowledgeFileType: { type: String },
       createdBy: { type: mongoose.Schema.Types.ObjectId, ref: 'User', required: true},
       comments: [
          {

@@ -22,6 +22,7 @@ exports.knowledge_create = (req, res, next) => {
                lookingFor: req.body.lookingFor,
                members: req.body.members,
                knowledgeFile: req.body.knowledgeFile,
+               knowledgeFileType: req.body.knowledgeFileType,
                createdBy: user._id,
                comments: [],
                likes: []
@@ -60,7 +61,7 @@ exports.knowledge_find_by_id = (req, res, next) => {
    const id = req.params.knowledgeId;
    Knowledge.findById(id)
       .select(
-         "_id title description type affiliation status lookingFor members knowledgeFile createdBy comments likes createdAt updatedAt"
+         "_id title description type affiliation status lookingFor members knowledgeFile knowledgeFileType createdBy comments likes createdAt updatedAt"
       )
       .exec()
       .then(doc => {
@@ -89,7 +90,7 @@ exports.knowledge_get_all = (req, res, next) => {
    Knowledge.find()
       .sort({createdAt: -1})
       .select(
-         "_id title description type affiliation status lookingFor members knowledgeFile createdBy comments likes createdAt updatedAt"
+         "_id title description type affiliation status lookingFor members knowledgeFile knowledgeFileType createdBy comments likes createdAt updatedAt"
       )
       .exec()
       .then(docs => {
@@ -106,6 +107,7 @@ exports.knowledge_get_all = (req, res, next) => {
                   lookingFor: doc.lookingFor,
                   members: doc.members,
                   knowledgeFile: doc.knowledgeFile,
+                  knowledgeFileType: doc.knowledgeFileType,
                   createdBy: doc.createdBy,
                   comments: doc.comments,
                   likes: doc.likes,
