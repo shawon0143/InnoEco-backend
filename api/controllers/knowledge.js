@@ -113,10 +113,10 @@ exports.knowledge_get_all = (req, res, next) => {
                   likes: doc.likes,
                   createdAt: doc.createdAt,
                   updatedAt: doc.updatedAt,
-                  request: {
-                     type: "GET",
-                     url: process.env.BaseApiURL + "/knowledge/" + doc._id
-                  }
+                  // request: {
+                  //    type: "GET",
+                  //    url: process.env.BaseApiURL + "/knowledge/" + doc._id
+                  // }
                };
             })
          };
@@ -161,5 +161,25 @@ exports.knowledge_delete = (req, res, next) => {
          console.log(err);
          res.status(500).json({ error: err });
       });
+};
+
+exports.knowledge_comment = (req, res, next) => {
+   const id = req.params.knowledgeId;
+   Knowledge.findByIdAndUpdate(
+      {_id: id},
+      {$push: {"comments": {details: req.body.details, userId: req.body.userId, postedOn: req.body.postedOn}}},
+      {safe: true, upsert: true, new : true},
+      function(err, result) {
+         if (err) {
+            console.log(err);
+            res.status(500).json({ error: err });
+         } else {
+            res.status(200).json({
+               message: "Comment added.",
+               data: result
+            });
+         }
+      }
+   );
 };
 

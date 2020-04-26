@@ -13,5 +13,7 @@ router.patch("/:knowledgeId", checkAuth, KnowledgeController.knowledge_update);
 
 router.delete("/:knowledgeId", checkAuth, KnowledgeController.knowledge_delete);
 
+router.post("/comment/:knowledgeId", checkAuth, KnowledgeController.knowledge_comment);
+
 
 module.exports = router;

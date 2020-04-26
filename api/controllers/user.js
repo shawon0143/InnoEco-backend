@@ -192,6 +192,7 @@ exports.user_login = (req, res, next) => {
                   message: 'Auth successful',
                   token: token,
                   role: user[0].role,
+                  _id: user[0]._id
                });
             }
             res.status(400).json({
