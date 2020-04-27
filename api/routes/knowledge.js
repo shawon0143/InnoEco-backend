@@ -15,5 +15,7 @@ router.delete("/:knowledgeId", checkAuth, KnowledgeController.knowledge_delete);
 
 router.post("/comment/:knowledgeId", checkAuth, KnowledgeController.knowledge_comment);
 
+router.post("/like/:knowledgeId", checkAuth, KnowledgeController.knowledge_like);
+
 
 module.exports = router;

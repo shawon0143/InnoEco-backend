@@ -183,3 +183,22 @@ exports.knowledge_comment = (req, res, next) => {
    );
 };
 
+exports.knowledge_like = (req, res, next) => {
+   const id = req.params.knowledgeId;
+   Knowledge.findByIdAndUpdate(
+      {_id: id},
+      {$push: {"likes": {userId: req.body.userId, likedOn: req.body.likedOn}}},
+      {safe: true, upsert: true, new : true},
+      function(err, result) {
+         if (err) {
+            console.log(err);
+            res.status(500).json({ error: err });
+         } else {
+            res.status(200).json({
+               message: "Knowledge Liked.",
+               data: result
+            });
+         }
+      }
+   );
+};
