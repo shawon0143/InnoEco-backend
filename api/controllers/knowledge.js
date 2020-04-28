@@ -168,7 +168,7 @@ exports.knowledge_comment = (req, res, next) => {
    Knowledge.findByIdAndUpdate(
       {_id: id},
       {$push: {"comments": {details: req.body.details, userId: req.body.userId, postedOn: req.body.postedOn}}},
-      {safe: true, upsert: true, new : true},
+      {safe: true, upsert: true, new : true, useFindAndModify: false},
       function(err, result) {
          if (err) {
             console.log(err);
