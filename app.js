@@ -50,6 +50,10 @@ app.use("/user", userRoutes);
 app.use("/knowledge", knowledgeRoutes);
 app.use("/upload", uploadRoutes);
 
+app.get('/',(req,res) => {
+   return res.send('Hello');
+});
+
 app.use((req, res, next) => {
    const error = new Error("Not found");
    error.status = 404;
