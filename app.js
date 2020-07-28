@@ -8,6 +8,7 @@ dotenv.config();
 const userRoutes = require("./api/routes/user");
 const knowledgeRoutes = require("./api/routes/knowledge");
 const uploadRoutes = require("./api/routes/fileUpload");
+const eventRoutes = require("./api/routes/event");
 
 // Init app
 const app = express();
@@ -49,6 +50,7 @@ app.use((req, res, next) => {
 app.use("/user", userRoutes);
 app.use("/knowledge", knowledgeRoutes);
 app.use("/upload", uploadRoutes);
+app.use("/event", eventRoutes);
 
 app.get('/',(req,res) => {
    return res.send('Hello');
