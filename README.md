@@ -1,5 +1,5 @@
 ## InnoEco-backend
-InnoEco is an innovation ecosystem collaboration platform. This repo is the frontend part of the project.
+InnoEco is an innovation ecosystem collaboration platform. This repo is the backend part of the project.
 
 ### Built With
 - Nodejs
