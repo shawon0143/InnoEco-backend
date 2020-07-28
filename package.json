@@ -1,7 +1,7 @@
 {
   "name": "innoeco-backend",
   "version": "1.0.0",
-  "description": "Innovation ecosystem backend",
+  "description": "InnoEco is an innovation ecosystem collaboration platform. This repo is the frontend part of the project.",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
@@ -10,9 +10,10 @@
   "keywords": [
     "node",
     "innovation",
-    "ecosystem"
+    "ecosystem",
+    "express"
   ],
-  "author": "Mohammad Nizam Uddin Shawon",
+  "author": "Mohammad Nizam Uddin",
   "license": "ISC",
   "dependencies": {
     "@sendgrid/mail": "^6.5.5",
