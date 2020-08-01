@@ -4,7 +4,7 @@ const Event = require('../models/event');
 const User = require('../models/user');
 
 exports.event_create = (req, res, next) => {
-   // first find user Id
+   
    User.findOne({ email: req.body.createdBy })
       .select(
          "_id"
